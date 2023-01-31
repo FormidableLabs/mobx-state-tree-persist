@@ -6,7 +6,7 @@ import {
 } from "./persistStore";
 
 export type Storage = {
-  getItem: (key: string) => Promise<string>;
+  getItem: (key: string) => Promise<string | null | undefined>;
   setItem: (key: string, data: string) => Promise<void>;
 };
 
@@ -41,8 +41,9 @@ const createPersistNode = async (
   // load from storage
   try {
     const restoredState = await config.storage.getItem(config.key);
-
-    applySnapshot(node, JSON.parse(restoredState));
+    if (restoredState) {
+      applySnapshot(node, JSON.parse(restoredState));
+    }
     persistStoreNode.setRehydrated(true);
   } catch (e) {}
 
