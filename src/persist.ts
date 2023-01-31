@@ -1,5 +1,9 @@
 import { applySnapshot, IStateTreeNode, onSnapshot } from "mobx-state-tree";
-import { PeristStoreModel, PersistStoreNode } from "./persistStore";
+import {
+  IPersistStoreModel,
+  PeristStoreModel,
+  PersistStoreNode,
+} from "./persistStore";
 
 export type Storage = {
   getItem: (key: string) => Promise<string>;
@@ -24,7 +28,10 @@ export const persist = (persistEntries: PersistProps) => {
   return persistStore;
 };
 
-const createPersistNode = async (persistStore, persistEntry: PersistEntry) => {
+const createPersistNode = async (
+  persistStore: IPersistStoreModel,
+  persistEntry: PersistEntry
+) => {
   const [node, config] = persistEntry;
   const persistStoreNode = PersistStoreNode.create({
     key: config.key,
