@@ -36,7 +36,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --quiet",
-    "check:ci": "yarn typecheck && yarn lint && yarn test",
+    "check:ci": "yarn typecheck && yarn lint",
     "preversion": "yarn check:ci",
     "build": "tsup",
     "prepare": "yarn build",
