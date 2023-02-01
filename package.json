@@ -38,15 +38,16 @@
     "lint": "eslint src --quiet",
     "check:ci": "yarn typecheck && yarn lint && yarn test",
     "preversion": "yarn check:ci",
-    "changeset": "changeset",
     "build": "tsup",
     "prepare": "yarn build",
+    "changeset": "changeset",
     "version": "yarn changeset version && yarn install --frozen-lockfile"
   },
   "peerDependencies": {
     "mobx-state-tree": "^5.1.7"
   },
   "devDependencies": {
+    "@svitejs/changesets-changelog-github-compact": "^1.1.0",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
     "eslint": "^8.16.0",
