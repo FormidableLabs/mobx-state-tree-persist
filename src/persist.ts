@@ -13,6 +13,7 @@ export type Storage = {
 export type PersistConfig = {
   key: string;
   storage: Storage;
+  delay?: number;
 };
 export type PersistEntry = [IStateTreeNode, PersistConfig];
 
@@ -32,7 +33,9 @@ const createPersistNode = async (
   persistStore: IPersistStoreModel,
   persistEntry: PersistEntry
 ) => {
-  const [node, config] = persistEntry;
+  const [node, configProp] = persistEntry;
+  const config: PersistConfig = Object.assign({ duration: 0 }, configProp);
+
   const persistStoreNode = PersistStoreNode.create({
     key: config.key,
   });
@@ -47,7 +50,11 @@ const createPersistNode = async (
     persistStoreNode.setRehydrated(true);
   } catch (e) {}
 
+  let timeout: ReturnType<typeof setTimeout> | number;
   onSnapshot(node, (snapshot) => {
-    config.storage.setItem(config.key, JSON.stringify(snapshot));
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      config.storage.setItem(config.key, JSON.stringify(snapshot));
+    }, config.delay);
   });
 };
