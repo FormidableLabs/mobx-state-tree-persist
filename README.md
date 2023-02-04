@@ -37,7 +37,7 @@ const persistStore = persist([
 ])
 ```
 
-### Rehydraed?
+### Rehydrated?
 
 The call to `persist` returns a state tree node in intself that can obvserved in any component. The node contains a `isRehydrated` computed value that flips to `true` once each configured store has had a chance to load data.
 
@@ -63,7 +63,7 @@ const App = observer(() => {
 
 | option | Description |
 | ------ | ----------- |
-| key | **required** - key data is stored under within the Storage Engine. |
+| key | **required** - key which the data is stored within the Storage Engine. |
 | storage | **required** - Storage Engine the node is saved within. Any engine can be used that implements the Storage Interface |
 | delay | **optional** - delay timeout in ms before data should be written out to Storage Engine. Default value: `0`
 
