@@ -1,5 +1,11 @@
 # mobx-state-tree-persist
 
+## 0.1.1
+
+### Patch Changes
+
+- Update documentation ([#8](https://github.com/FormidableLabs/mobx-state-tree-persist/pull/8))
+
 ## 0.1.0
 
 ### Minor Changes
