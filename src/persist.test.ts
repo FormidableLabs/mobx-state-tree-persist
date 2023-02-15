@@ -25,7 +25,7 @@ beforeEach(() => {
 });
 
 describe("persist", () => {
-  test("should read from storage on initialize", () => {
+  test("should read from storage on initialize", async () => {
     const userNode = UserModel.create();
     const persistedData: IUserSnapshotOut = {
       firstName: "test",
@@ -36,9 +36,8 @@ describe("persist", () => {
       [userNode, { key: "user", storage: testStorage }],
     ]);
 
-    waitFor(() => persistStore.isRehydrated).then(() => {
-      expect(getSnapshot(userNode)).toStrictEqual(persistedData);
-    });
+    await waitFor(() => persistStore.isRehydrated);
+    expect(getSnapshot(userNode)).toStrictEqual(persistedData);
   });
 
   test("should write data on action", async () => {
