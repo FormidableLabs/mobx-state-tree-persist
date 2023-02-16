@@ -41,6 +41,14 @@ const createPersistNode = async (
   });
   persistStore.addNode(persistStoreNode);
 
+  let timeout: ReturnType<typeof setTimeout> | number;
+  onSnapshot(node, (snapshot) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      config.storage.setItem(config.key, JSON.stringify(snapshot));
+    }, config.delay);
+  });
+
   // load from storage
   try {
     const restoredState = await config.storage.getItem(config.key);
@@ -49,12 +57,4 @@ const createPersistNode = async (
     }
     persistStoreNode.setRehydrated(true);
   } catch (e) {}
-
-  let timeout: ReturnType<typeof setTimeout> | number;
-  onSnapshot(node, (snapshot) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      config.storage.setItem(config.key, JSON.stringify(snapshot));
-    }, config.delay);
-  });
 };
