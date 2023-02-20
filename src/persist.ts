@@ -14,6 +14,7 @@ export type PersistConfig = {
   key: string;
   storage: Storage;
   delay?: number;
+  whitelist?: Array<string>;
 };
 export type PersistEntry = [IStateTreeNode, PersistConfig];
 
@@ -34,7 +35,7 @@ const createPersistNode = async (
   persistEntry: PersistEntry
 ) => {
   const [node, configProp] = persistEntry;
-  const config: PersistConfig = Object.assign({ duration: 0 }, configProp);
+  const config: PersistConfig = { delay: 0, ...configProp };
 
   const persistStoreNode = PersistStoreNode.create({
     key: config.key,
@@ -42,9 +43,17 @@ const createPersistNode = async (
   persistStore.addNode(persistStoreNode);
 
   let timeout: ReturnType<typeof setTimeout> | number;
-  onSnapshot(node, (snapshot) => {
+  onSnapshot(node, (snapshotArg) => {
     clearTimeout(timeout);
+
+    const snapshot = { ...snapshotArg };
     timeout = setTimeout(() => {
+      for (const elem in snapshot) {
+        if (config.whitelist && config.whitelist.indexOf(elem) === -1) {
+          delete snapshot[elem];
+        }
+      }
+
       config.storage.setItem(config.key, JSON.stringify(snapshot));
     }, config.delay);
   });
