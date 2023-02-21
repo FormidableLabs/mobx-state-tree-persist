@@ -48,9 +48,11 @@ const createPersistNode = async (
 
     const snapshot = { ...snapshotArg };
     timeout = setTimeout(() => {
-      for (const elem in snapshot) {
-        if (config.whitelist && config.whitelist.indexOf(elem) === -1) {
-          delete snapshot[elem];
+      if (config.whitelist) {
+        for (const elem in snapshot) {
+          if (config.whitelist.indexOf(elem) === -1) {
+            delete snapshot[elem];
+          }
         }
       }
 
