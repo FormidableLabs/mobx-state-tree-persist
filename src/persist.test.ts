@@ -78,4 +78,31 @@ describe("persist", () => {
 
     vi.useRealTimers();
   });
+
+  test("should only persist whitelisted fields if defined", () => {
+    vi.useFakeTimers();
+    const spy = vi.spyOn(testStorage, "setItem");
+
+    const userNode = UserModel.create({ firstName: "first", lastName: "last" });
+    persist([
+      [
+        userNode,
+        { key: "user", storage: testStorage, whitelist: ["firstName"] },
+      ],
+    ]);
+
+    userNode.setFirstName("test");
+
+    vi.runAllTimers();
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(
+      "user",
+      JSON.stringify({
+        firstName: "test",
+      })
+    );
+
+    vi.useRealTimers();
+  });
 });

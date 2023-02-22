@@ -65,7 +65,8 @@ const App = observer(() => {
 | ------ | ----------- |
 | key | **required** - key which the data is stored within the Storage Engine. |
 | storage | **required** - Storage Engine the node is saved within. Any engine can be used that implements the Storage Interface |
-| delay | **optional** - delay timeout in ms before data should be written out to Storage Engine. Default value: `0`
+| delay | **optional** - delay timeout in ms before data should be written out to Storage Engine. Default value: `0` |
+| whitelist | **optional** - configure which keys from the snapshot should be persisted. Default: all keys.|
 
 ## Storage Interface
 
