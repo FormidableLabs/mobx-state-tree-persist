@@ -1,5 +1,11 @@
 # mobx-state-tree-persist
 
+## 0.2.0
+
+### Minor Changes
+
+- Add 'whitelist' configuration option ([#11](https://github.com/FormidableLabs/mobx-state-tree-persist/pull/11))
+
 ## 0.1.1
 
 ### Patch Changes
